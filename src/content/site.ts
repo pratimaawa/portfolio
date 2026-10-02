@@ -6,7 +6,7 @@ export const profile = {
   role: 'Senior Frontend Developer',
   location: 'Kathmandu Valley, Nepal',
   email: 'pratimaawal@gmail.com',
-  url: 'https://TODO.example.com',
+  url: 'https://pratima-awa.vercel.app',
   headline:
     'I build complex travel products for the web: flight search, booking flows, multi-tenant B2B portals, and the frontend architecture that keeps them maintainable.',
   intro:
