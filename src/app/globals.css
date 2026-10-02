@@ -1,0 +1,91 @@
+@import 'tailwindcss';
+
+:root {
+  --bg: #f7f5f0;
+  --fg: #1c1b19;
+  --muted: #5f5b53;
+  --rule: #dcd8ce;
+  --surface: #efece4;
+  --accent: #a63d17;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121110;
+    --fg: #ecebe6;
+    --muted: #a19d93;
+    --rule: #2c2a26;
+    --surface: #1a1917;
+    --accent: #f08a5d;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-newsreader);
+}
+
+@layer base {
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-accent text-bg;
+  }
+
+  :focus-visible {
+    @apply rounded-sm outline-2 outline-offset-4 outline-accent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility wrap {
+  @apply mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8;
+}
+
+@utility link {
+  @apply underline decoration-rule decoration-1 underline-offset-4 transition-colors hover:decoration-accent;
+}
+
+@utility label {
+  @apply font-mono text-xs tracking-wide text-muted uppercase;
+}
+
+@utility prose-body {
+  @apply max-w-[65ch] text-base/7 text-fg sm:text-lg/8;
+}
