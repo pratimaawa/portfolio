@@ -8,6 +8,8 @@ export const profile = {
   url: 'https://pratima-awa.vercel.app',
   headline:
     'I build fast, reliable web applications with React, Next.js and TypeScript, and the frontend architecture that keeps them easy to change.',
+  // Rendered in the accent colour inside the headline.
+  headlineEmphasis: 'easy to change',
   intro:
     "Frontend developer since 2019. I've worked on AI platforms, enterprise dashboards and task-management tools, and today I build multi-tenant B2B and B2C products at Gurzu. I care about clean component architecture, getting server state right, accessible UI, and code that other developers can extend. I have led frontend teams of three to five developers.",
   links: [
@@ -19,6 +21,12 @@ export const profile = {
   ],
 };
 
+export const facts = [
+  { value: '7+', label: 'years building for the web' },
+  { value: '3–5', label: 'person frontend teams led' },
+  { value: 'React · Next.js · TS', label: 'core stack' },
+];
+
 export type Project = {
   name: string;
   summary: string;
@@ -27,6 +35,9 @@ export type Project = {
   stack: string[];
   href?: string;
   live?: string;
+  source?: string;
+  featured?: boolean;
+  image?: 'flight-demo';
 };
 
 export const projects: Project[] = [
@@ -44,6 +55,7 @@ export const projects: Project[] = [
       'Zustand',
     ],
     href: '/work/onta-trips',
+    featured: true,
   },
   {
     name: 'Ouro Trips',
@@ -74,6 +86,9 @@ export const projects: Project[] = [
     role: 'Side project',
     stack: ['Next.js', 'TypeScript', 'TanStack Query', 'Zustand', 'RHF + Zod'],
     live: 'https://flight-booking-demo-next.vercel.app',
+    source: 'https://github.com/pratimaawa/flight-booking-demo',
+    featured: true,
+    image: 'flight-demo',
   },
 ];
 

@@ -4,36 +4,35 @@ export function SiteFooter() {
   return (
     <footer
       id="contact"
-      className="mt-24 border-t border-rule sm:mt-32"
+      className="mt-28 border-t border-rule sm:mt-36"
       aria-labelledby="contact-heading"
     >
-      <div className="wrap grid gap-8 py-12 sm:grid-cols-[1fr_auto] sm:items-end sm:py-16">
-        <div>
-          <p className="label">Contact</p>
-          <h2
-            id="contact-heading"
-            className="mt-3 font-serif text-3xl tracking-tight sm:text-4xl"
-          >
-            Building something complex?
-          </h2>
-          <a
-            href={`mailto:${profile.email}`}
-            className="mt-4 inline-block text-lg link"
-          >
-            {profile.email}
+      <div className="wrap py-16 sm:py-24">
+        <p className="label">Contact</p>
+        <h2
+          id="contact-heading"
+          className="reveal mt-4 max-w-[16ch] font-serif text-4xl/[1.05] tracking-tight sm:text-6xl/[1.02]"
+        >
+          Let&apos;s build something that <em className="text-accent">lasts</em>
+          .
+        </h2>
+        <p className="mt-6 max-w-[48ch] text-muted sm:text-lg">
+          Want to talk frontend, architecture or a project? Email is the fastest
+          way to reach me.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <a href={`mailto:${profile.email}`} className="btn-solid">
+            Email me
           </a>
+          {profile.links.map((l) => (
+            <a key={l.href} href={l.href} className="btn-outline" rel="me">
+              {l.label} <span aria-hidden="true">↗</span>
+            </a>
+          ))}
         </div>
-        {profile.links.length > 0 && (
-          <ul className="flex gap-6 text-sm">
-            {profile.links.map((l) => (
-              <li key={l.href}>
-                <a href={l.href} className="link" rel="me">
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
+        <p className="mt-6 font-mono text-sm break-all text-muted">
+          {profile.email}
+        </p>
       </div>
     </footer>
   );

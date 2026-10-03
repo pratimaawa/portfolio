@@ -2,23 +2,30 @@ type Props = {
   id: string;
   index: string;
   title: string;
+  // Stack the heading above the content and use the full width (for card grids).
+  wide?: boolean;
   children: React.ReactNode;
 };
 
 // Numbered section with a hairline rule; label column collapses above content on mobile.
-export function Section({ id, index, title, children }: Props) {
+export function Section({ id, index, title, wide = false, children }: Props) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className="wrap mt-20 scroll-mt-8 sm:mt-28"
+      className="wrap mt-24 scroll-mt-8 sm:mt-32"
     >
-      <div className="grid gap-6 border-t border-rule pt-6 md:grid-cols-[12rem_1fr] md:gap-10">
-        <h2 id={`${id}-heading`} className="flex gap-3 label">
-          <span className="tabular-nums" aria-hidden="true">
+      <div
+        className={`grid gap-8 border-t border-rule pt-8 ${wide ? '' : 'md:grid-cols-[12rem_1fr] md:gap-10'}`}
+      >
+        <h2 id={`${id}-heading`} className="reveal">
+          <span
+            className="block font-serif text-5xl leading-none text-accent tabular-nums sm:text-6xl"
+            aria-hidden="true"
+          >
             {index}
           </span>
-          {title}
+          <span className="mt-3 block label">{title}</span>
         </h2>
         <div>{children}</div>
       </div>
