@@ -68,6 +68,14 @@ export const projects: Project[] = [
     stack: ['React', 'Next.js', 'TypeScript'],
     live: 'https://hamrotrips.com',
   },
+  {
+    name: 'Flight Booking Demo',
+    summary:
+      'Open-source search-to-booking flow: URL-driven search, server-rendered results with client caching, typed multi-passenger forms, and a fare re-check before confirming. Built on fictional data.',
+    role: 'Side project',
+    stack: ['Next.js', 'TypeScript', 'TanStack Query', 'Zustand', 'RHF + Zod'],
+    live: 'https://flight-booking-demo-seven.vercel.app',
+  },
 ];
 
 export const otherProjects = [
