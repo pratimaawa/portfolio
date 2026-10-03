@@ -1,5 +1,4 @@
 // Single source of truth for page content, taken from the CV.
-// Anything marked TODO still needs real information — do not ship it as-is.
 
 export const profile = {
   name: 'Pratima Awa',
@@ -8,11 +7,11 @@ export const profile = {
   email: 'pratimaawal@gmail.com',
   url: 'https://pratima-awa.vercel.app',
   headline:
-    'I build complex travel products for the web: flight search, booking flows, multi-tenant B2B portals, and the frontend architecture that keeps them maintainable.',
+    'I build fast, reliable web applications with React, Next.js and TypeScript, and the frontend architecture that keeps them easy to change.',
   intro:
-    'Frontend developer since 2019, working in React, Next.js and TypeScript. I currently work at Gurzu on multi-tenant B2B and B2C travel platforms, and I own the flight booking workflow end to end, from search to ticketing. I have led frontend teams of three to five developers.',
-  // TODO: add GitHub if wanted.
+    "Frontend developer since 2019. I've worked on AI platforms, enterprise dashboards and task-management tools, and today I build multi-tenant B2B and B2C products at Gurzu. I care about clean component architecture, getting server state right, accessible UI, and code that other developers can extend. I have led frontend teams of three to five developers.",
   links: [
+    { label: 'GitHub', href: 'https://github.com/pratimaawa' },
     {
       label: 'LinkedIn',
       href: 'https://www.linkedin.com/in/pratima-awa-2b8759202/',
@@ -34,7 +33,7 @@ export const projects: Project[] = [
   {
     name: 'Onta Trips',
     summary:
-      'Multi-tenant travel platform: B2C booking and a B2B agency dashboard from one Next.js codebase, with JWT-based role access and feature-level permissions. I own the flight booking workflow from search to ticketing.',
+      'Multi-tenant platform with a consumer site and a B2B dashboard in one Next.js codebase, using JWT-based role access and feature-level permissions. I own the core booking flow, from search to ticketing.',
     role: 'Lead Frontend Developer',
     period: 'Dec 2025 – Present',
     stack: [
@@ -49,7 +48,7 @@ export const projects: Project[] = [
   {
     name: 'Ouro Trips',
     summary:
-      'Flight booking platform. I owned consumer booking across domestic, international and return journeys, built agency workflows for hold bookings, amendments and group bookings, and designed the net-price logic that reconciles promo codes with agency sales rules.',
+      'Booking platform. I owned the consumer booking flow end to end, built B2B workflows for holds, amendments and group bookings, and designed the pricing logic that reconciles promo codes with partner sales rules.',
     role: 'Frontend Developer',
     period: 'Jun 2025 – Aug 2026',
     stack: [
@@ -63,7 +62,7 @@ export const projects: Project[] = [
   {
     name: 'HamroTrips',
     summary:
-      'B2B and B2C travel booking platform: multi-step booking flows, interactive dashboards for flight and travel search, and CMS interfaces for content, pricing and booking data.',
+      'B2B and B2C booking platform: multi-step flows, interactive search dashboards, and CMS interfaces for content and pricing.',
     role: 'Frontend Developer',
     stack: ['React', 'Next.js', 'TypeScript'],
     live: 'https://hamrotrips.com',
@@ -106,7 +105,7 @@ export const experience: Role[] = [
     title: 'Frontend Developer',
     period: 'Aug 2024 – Present',
     summary:
-      'Frontend for multi-tenant B2B/B2C travel platforms: flight search, fare selection, reservation and ticketing, plus agent management, wallet/ledger and KYC onboarding for agencies. I lead a three-person frontend team and contribute to the shared design system in Storybook.',
+      'Frontend for multi-tenant B2B and B2C platforms: complex multi-step flows, role-based dashboards, and account, wallet and onboarding workflows. I lead a three-person frontend team and contribute to the shared design system in Storybook.',
   },
   {
     company: 'Axios Softwork',
@@ -126,8 +125,8 @@ export const experience: Role[] = [
 
 export const capabilities = [
   {
-    title: 'Booking workflows end to end',
-    body: 'Search, fare selection, reservation and ticketing as one connected flow, with multi-step forms, schema validation and predictable state.',
+    title: 'Complex flows & forms',
+    body: 'Multi-step flows and long forms with schema validation, predictable state and clear error handling.',
     tools: 'React Hook Form, Zod, Zustand',
   },
   {
@@ -136,13 +135,13 @@ export const capabilities = [
     tools: 'TanStack Query, Next.js App Router',
   },
   {
-    title: 'Multi-tenant architecture & RBAC',
-    body: 'One codebase serving consumers and agencies, with route groups, JWT-based roles and feature-level permission gating.',
+    title: 'Frontend architecture & access control',
+    body: 'Shared codebases that serve different kinds of users, with route groups, role-based access and feature-level permissions.',
     tools: 'Next.js route groups, middleware, HttpOnly cookies',
   },
   {
     title: 'Design systems',
-    body: 'Reusable components and primitives that stay consistent across portals, documented where the team can find them.',
+    body: 'Reusable components and primitives that keep products consistent, documented where the team can find them.',
     tools: 'Tailwind CSS, shadcn/ui, Mantine, Storybook',
   },
   {
