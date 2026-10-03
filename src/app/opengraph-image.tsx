@@ -6,7 +6,7 @@ export const alt = `${profile.name}, ${profile.role}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-// ponytail: default OG font; load Newsreader via readFile if the serif matters in previews.
+// Note: default OG font; load Newsreader via readFile if the serif matters in previews.
 export default function Image() {
   return new ImageResponse(
     <div
