@@ -13,7 +13,7 @@ export function Section({ id, index, title, wide = false, children }: Props) {
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className="wrap mt-24 scroll-mt-24 sm:mt-32"
+      className="wrap mt-24 scroll-mt-8 sm:mt-32"
     >
       <div
         className={`grid gap-8 border-t border-rule pt-8 ${wide ? '' : 'md:grid-cols-[12rem_1fr] md:gap-10'}`}

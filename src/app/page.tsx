@@ -152,7 +152,7 @@ function Headline() {
   return (
     <>
       {headline.slice(0, i)}
-      <em className="draw-underline text-accent">{headlineEmphasis}</em>
+      <em className="text-accent">{headlineEmphasis}</em>
       {headline.slice(i + headlineEmphasis.length)}
     </>
   );
