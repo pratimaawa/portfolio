@@ -2,32 +2,20 @@ import Link from 'next/link';
 
 import { profile } from '@/content/site';
 
-const nav = [
-  { label: 'Work', href: '/#work' },
-  { label: 'Experience', href: '/#experience' },
-  { label: 'Contact', href: '#contact' },
-];
+import { NavLinks } from './NavLinks';
 
 export function SiteHeader() {
   return (
-    <header className="wrap flex items-baseline justify-between gap-4 py-6 sm:py-8">
-      <Link href="/" className="font-serif text-lg font-medium tracking-tight">
-        {profile.name}
-      </Link>
-      <nav aria-label="Primary">
-        <ul className="flex gap-4 text-sm text-muted sm:gap-6">
-          {nav.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="transition-colors hover:text-fg"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    <header className="sticky top-0 z-40 border-b border-transparent bg-bg/80 backdrop-blur-md supports-[backdrop-filter]:bg-bg/70">
+      <div className="wrap flex items-center justify-between gap-4 py-4 sm:py-5">
+        <Link
+          href="/"
+          className="font-serif text-base font-medium tracking-tight whitespace-nowrap sm:text-lg"
+        >
+          {profile.name}
+        </Link>
+        <NavLinks />
+      </div>
     </header>
   );
 }
