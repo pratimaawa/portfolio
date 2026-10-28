@@ -30,6 +30,16 @@ const IMAGES = {
   },
 } as const;
 
+// Unversioned, de-duplicated stack across all projects, for the marquee.
+const stack = [
+  ...new Set(
+    projects.flatMap((p) => p.stack.map((t) => t.replace(/ \d+$/, '')))
+  ),
+];
+
+const meta = (p: Project) => [p.role, p.period].filter(Boolean).join(' · ');
+const pad = (n: number) => String(n).padStart(2, '0');
+
 export default function Home() {
   const featured = projects.filter((p) => p.featured);
   const rest = projects.filter((p) => !p.featured);
@@ -44,60 +54,110 @@ export default function Home() {
         }}
       />
 
-      <div className="wrap pt-14 sm:pt-24">
+      <div className="wrap flex min-h-[calc(100svh-6rem)] flex-col justify-end pt-8 pb-14 sm:pb-20">
         <p className="enter label">
           {profile.role} · {profile.location}
         </p>
-        <h1 className="enter mt-6 max-w-[20ch] font-serif text-[2.6rem]/[1.05] tracking-tight sm:text-6xl/[1.02] lg:text-7xl/[1]">
-          <Headline />
+        <h1 className="mt-1 display text-[clamp(3.5rem,14.5vw,12.5rem)] leading-[0.86]">
+          {profile.name.split(' ').map((word, i) => (
+            <span
+              key={word}
+              className="mr-[0.18em] inline-block overflow-hidden pt-[0.14em] pr-[0.06em] align-bottom"
+            >
+              <span
+                className={`mask-up block ${i > 0 ? 'text-accent italic' : ''}`}
+                style={{ animationDelay: `${i * 140}ms` }}
+              >
+                {word}
+              </span>
+            </span>
+          ))}
         </h1>
-        <p className="enter mt-8 prose-body text-muted [animation-delay:120ms]">
-          {profile.intro}
-        </p>
 
-        <div className="enter mt-10 flex flex-wrap gap-3 [animation-delay:200ms]">
-          <a href={`mailto:${profile.email}`} className="btn-solid">
-            Email me
-          </a>
-          <a href="#work" className="btn-outline">
-            View work <span aria-hidden="true">↓</span>
-          </a>
-          {github && (
-            <a href={github.href} className="btn-outline" rel="me">
-              GitHub <span aria-hidden="true">↗</span>
-            </a>
-          )}
+        <div className="mt-10 grid gap-8 border-t border-rule pt-8 sm:mt-14 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+          <p className="enter display text-[clamp(1.65rem,3.2vw,2.6rem)] leading-[1.12] [animation-delay:250ms]">
+            <Headline />
+          </p>
+          <div className="enter [animation-delay:350ms]">
+            <p className="text-base/7 text-muted sm:text-lg/8">
+              {profile.intro}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href={`mailto:${profile.email}`} className="btn-solid">
+                Email me
+              </a>
+              <a href="#work" className="btn-outline">
+                View work <span aria-hidden="true">↓</span>
+              </a>
+              {github && (
+                <a
+                  href={github.href}
+                  className="btn-outline"
+                  target="_blank"
+                  rel="me noopener noreferrer"
+                >
+                  GitHub <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </div>
+          </div>
         </div>
 
-        <dl className="enter mt-14 grid grid-cols-1 gap-6 border-t border-rule pt-8 [animation-delay:280ms] sm:grid-cols-3 sm:gap-8">
+        <dl className="enter mt-12 grid border-y border-rule [animation-delay:450ms] sm:mt-16 sm:grid-cols-[1fr_1fr_auto]">
           {facts.map((f) => (
-            <div key={f.label}>
+            <div
+              key={f.label}
+              className="border-rule py-5 not-first:border-t sm:px-6 sm:py-6 sm:not-first:border-t-0 sm:not-first:border-l sm:first:pl-0"
+            >
               <dt className="sr-only">{f.label}</dt>
-              <dd className="font-serif text-3xl tracking-tight sm:text-4xl">
+              <dd className="display text-[clamp(1.75rem,3.5vw,2.75rem)] leading-none whitespace-nowrap">
                 {f.value}
               </dd>
-              <dd className="mt-1 text-sm text-muted">{f.label}</dd>
+              <dd className="mt-2 text-sm text-muted">{f.label}</dd>
             </div>
           ))}
         </dl>
       </div>
 
-      <Section id="work" index="01" title="Selected work" wide>
-        <ul className="grid gap-6">
-          {featured.map((p) => (
-            <ProjectCard key={p.name} project={p} featured />
+      <div
+        aria-hidden="true"
+        className="band overflow-hidden border-b border-rule"
+      >
+        <div className="marquee flex w-max py-5">
+          {[0, 1].map((half) => (
+            <ul key={half} className="flex shrink-0">
+              {[...stack, ...stack].map((t, i) => (
+                <li
+                  key={i}
+                  className="flex items-center gap-8 pr-8 font-mono text-sm tracking-widest text-muted uppercase"
+                >
+                  {t}
+                  <span className="text-accent">✦</span>
+                </li>
+              ))}
+            </ul>
           ))}
-        </ul>
-        <ul className="mt-6 grid gap-6 md:grid-cols-2">
+        </div>
+      </div>
+
+      <Section id="work" index="01 / 03" title="Selected work" band>
+        <div className="space-y-24 sm:space-y-32">
+          {featured.map((p, i) => (
+            <Showcase key={p.name} project={p} n={i + 1} flip={i % 2 === 1} />
+          ))}
+        </div>
+
+        <ul className="mt-24 border-t border-rule sm:mt-32">
           {rest.map((p) => (
-            <ProjectCard key={p.name} project={p} />
+            <ProjectRow key={p.name} project={p} />
           ))}
         </ul>
-        <div className="reveal mt-12">
+
+        <div className="reveal mt-16">
           <h3 className="label">Also worked on</h3>
-          <ul className="mt-4 grid gap-4 sm:grid-cols-3">
+          <ul className="mt-5 grid gap-6 sm:grid-cols-3">
             {otherProjects.map((o) => (
-              <li key={o.name} className="border-l-2 border-accent pl-4">
+              <li key={o.name} className="border-l-2 border-rule pl-4">
                 <p className="font-medium">{o.name}</p>
                 <p className="mt-1 text-sm text-muted">{o.note}</p>
               </li>
@@ -106,40 +166,43 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="experience" index="02" title="Experience">
-        <ol className="relative space-y-10 border-l border-rule pl-6 sm:pl-8">
+      <Section id="experience" index="02 / 03" title="Experience">
+        <ol>
           {experience.map((r) => (
-            <li key={r.company} className="reveal relative">
-              <span
-                aria-hidden="true"
-                className="absolute top-2 -left-[calc(1.5rem+5px)] size-2.5 rounded-full bg-accent ring-4 ring-bg sm:-left-[calc(2rem+5px)]"
-              />
-              <p className="font-mono text-xs text-muted tabular-nums">
+            <li
+              key={r.company}
+              className="reveal grid gap-3 border-b border-rule py-8 first:border-t sm:py-10 md:grid-cols-[14rem_1fr] md:gap-12"
+            >
+              <p className="font-mono text-sm text-muted tabular-nums md:pt-2">
                 {r.period}
               </p>
-              <h3 className="mt-1 font-serif text-2xl tracking-tight">
-                {r.title}
-                <span className="text-muted"> · {r.company}</span>
-              </h3>
-              <p className="mt-2 max-w-[62ch] text-muted">{r.summary}</p>
+              <div>
+                <h3 className="display text-3xl leading-tight sm:text-4xl">
+                  {r.title}
+                </h3>
+                <p className="mt-1 font-medium text-accent">{r.company}</p>
+                <p className="mt-4 max-w-[62ch] text-muted">{r.summary}</p>
+              </div>
             </li>
           ))}
         </ol>
       </Section>
 
-      <Section id="practice" index="03" title="How I work" wide>
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {capabilities.map((c) => (
-            <li
-              key={c.title}
-              className="reveal rounded-2xl border border-rule p-5 sm:p-6"
-            >
-              <h3 className="font-medium">{c.title}</h3>
-              <p className="mt-2 text-sm text-muted">{c.body}</p>
-              <p className="mt-4 font-mono text-xs text-accent">{c.tools}</p>
+      <Section id="practice" index="03 / 03" title="How I work">
+        <ol className="grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          {capabilities.map((c, i) => (
+            <li key={c.title} className="reveal border-t border-rule pt-5">
+              <p className="font-mono text-xs text-accent tabular-nums">
+                {pad(i + 1)}
+              </p>
+              <h3 className="mt-3 display text-2xl leading-tight sm:text-[1.75rem]">
+                {c.title}
+              </h3>
+              <p className="mt-3 text-muted">{c.body}</p>
+              <p className="mt-5 font-mono text-xs text-muted">{c.tools}</p>
             </li>
           ))}
-        </ul>
+        </ol>
       </Section>
     </>
   );
@@ -158,86 +221,195 @@ function Headline() {
   );
 }
 
-function ProjectCard({
+function Stack({ items }: { items: string[] }) {
+  return (
+    <ul className="mt-6 flex flex-wrap gap-2" aria-label="Tech stack">
+      {items.map((t) => (
+        <li
+          key={t}
+          className="rounded-full border border-rule px-3 py-1 font-mono text-xs text-muted"
+        >
+          {t}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// Large alternating showcase for featured projects: visual on one side, story + actions on the other.
+function Showcase({
   project: p,
-  featured = false,
+  n,
+  flip,
 }: {
   project: Project;
-  featured?: boolean;
+  n: number;
+  flip: boolean;
 }) {
   const image = p.image ? IMAGES[p.image] : null;
-  const meta = [p.role, p.period].filter(Boolean).join(' · ');
-  const interactive = Boolean(p.href || p.live);
 
   return (
-    <li
-      className={`reveal card ${interactive ? 'group hover:-translate-y-1 hover:border-fg/30 hover:shadow-xl hover:shadow-fg/5' : ''} ${
-        image ? 'grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center' : ''
-      }`}
-    >
+    <article className="reveal grid items-center gap-10 *:min-w-0 lg:grid-cols-2 lg:gap-16">
+      <div className={flip ? 'lg:order-2' : ''}>
+        {image ? (
+          <BrowserFrame host={p.live ? new URL(p.live).host : ''}>
+            <Image
+              src={image.src}
+              alt={image.alt}
+              placeholder="blur"
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="aspect-[4/3] w-full object-cover object-top"
+            />
+          </BrowserFrame>
+        ) : (
+          <Poster project={p} />
+        )}
+      </div>
+
       <div>
-        <p className="label">{meta}</p>
-        <h3
-          className={`mt-3 font-serif tracking-tight ${featured ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'}`}
-        >
-          {p.href ? (
-            <Link href={p.href} className="stretched-link">
-              {p.name}
+        <p className="label">
+          <span className="text-accent">{pad(n)}</span> · {meta(p)}
+        </p>
+        <h3 className="mt-4 display text-[clamp(2.5rem,5vw,3.75rem)] leading-none">
+          {p.name}
+        </h3>
+        <p className="mt-5 max-w-[52ch] text-muted sm:text-lg/8">{p.summary}</p>
+        <Stack items={p.stack} />
+        <div className="mt-8 flex flex-wrap gap-3">
+          {p.href && (
+            <Link href={p.href} className="group btn-solid">
+              Read case study
+              <span
+                aria-hidden="true"
+                className="transition-transform group-hover:translate-x-0.5"
+              >
+                →
+              </span>
             </Link>
-          ) : p.live ? (
-            <a href={p.live} className="stretched-link">
+          )}
+          {p.live && (
+            <a
+              href={p.live}
+              className={p.href ? 'btn-outline' : 'btn-solid'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit site <span aria-hidden="true">↗</span>
+            </a>
+          )}
+          {p.source && (
+            <a
+              href={p.source}
+              className="btn-outline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Source code <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function BrowserFrame({
+  host,
+  children,
+}: {
+  host: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-rule bg-surface shadow-2xl shadow-black/40 transition-transform duration-500 hover:-translate-y-1">
+      <div className="flex items-center gap-3 border-b border-rule px-4 py-3">
+        <span aria-hidden="true" className="flex gap-1.5">
+          {[0, 1, 2].map((d) => (
+            <span key={d} className="size-2.5 rounded-full bg-rule" />
+          ))}
+        </span>
+        <span className="mx-auto truncate rounded-full bg-bg px-3 py-0.5 font-mono text-[11px] text-muted">
+          {host}
+        </span>
+        <span aria-hidden="true" className="w-[42px]" />
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// Typographic stand-in for projects without a screenshot. Duplicates the case-study button, so it's hidden from AT and tab order.
+function Poster({ project: p }: { project: Project }) {
+  const body = (
+    <>
+      <div className="flex justify-between gap-4 font-mono text-xs tracking-widest uppercase">
+        <span>{p.href ? 'Case study' : p.role}</span>
+        <span>{p.period}</span>
+      </div>
+      <p className="display text-[clamp(3.25rem,8vw,6.5rem)] leading-[0.85] italic transition-transform duration-500 group-hover:-translate-y-1">
+        {p.name}
+      </p>
+      <div className="flex items-end justify-between gap-6">
+        <p className="max-w-[32ch] font-mono text-xs tracking-wide uppercase opacity-80">
+          {p.role}
+        </p>
+        <span className="text-3xl transition-transform duration-300 group-hover:translate-x-1">
+          →
+        </span>
+      </div>
+    </>
+  );
+  const cls =
+    'group flex aspect-[4/3] flex-col justify-between rounded-xl bg-accent p-6 text-bg sm:p-10';
+
+  return p.href ? (
+    <Link href={p.href} tabIndex={-1} aria-hidden="true" className={cls}>
+      {body}
+    </Link>
+  ) : (
+    <div aria-hidden="true" className={cls}>
+      {body}
+    </div>
+  );
+}
+
+function ProjectRow({ project: p }: { project: Project }) {
+  return (
+    <li className="reveal group hit grid gap-4 border-b border-rule py-8 sm:py-10 md:grid-cols-[1fr_1.4fr] md:gap-12">
+      <div>
+        <p className="label">{meta(p)}</p>
+        <h3 className="mt-3 display text-3xl leading-tight sm:text-4xl">
+          {p.live ? (
+            <a
+              href={p.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="stretched-link transition-colors group-hover:text-accent"
+            >
               {p.name}
             </a>
           ) : (
             p.name
           )}
         </h3>
-        <p className="mt-3 max-w-[60ch] text-muted">{p.summary}</p>
-        <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tech stack">
-          {p.stack.map((t) => (
-            <li
-              key={t}
-              className="rounded-full border border-rule px-3 py-1 font-mono text-xs text-muted"
-            >
-              {t}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium">
-          {p.href && (
-            <span className="text-accent" aria-hidden="true">
-              Read case study{' '}
-              <span className="inline-block transition-transform group-hover:translate-x-1">
-                →
-              </span>
-            </span>
-          )}
-          {p.live && !p.href && (
-            <span className="text-accent" aria-hidden="true">
-              {new URL(p.live).host}{' '}
-              <span className="inline-block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                ↗
-              </span>
-            </span>
-          )}
-          {p.source && (
-            <a href={p.source} className="relative z-10 link">
-              Source code
-            </a>
-          )}
-        </div>
       </div>
-      {image && (
-        <div className="overflow-hidden rounded-xl border border-rule bg-bg">
-          <Image
-            src={image.src}
-            alt={image.alt}
-            placeholder="blur"
-            sizes="(min-width: 1024px) 480px, 100vw"
-            className="aspect-[16/11] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-          />
-        </div>
-      )}
+      <div>
+        <p className="text-muted">{p.summary}</p>
+        <p className="mt-4 font-mono text-xs text-muted">
+          {p.stack.join(' · ')}
+        </p>
+        {p.live && (
+          <p
+            aria-hidden="true"
+            className="mt-4 text-sm font-medium text-accent"
+          >
+            {new URL(p.live).host}{' '}
+            <span className="inline-block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+              ↗
+            </span>
+          </p>
+        )}
+      </div>
     </li>
   );
 }

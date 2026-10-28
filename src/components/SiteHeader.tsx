@@ -10,7 +10,7 @@ const nav = [
 
 export function SiteHeader() {
   return (
-    <header className="wrap flex items-baseline justify-between gap-4 py-6 sm:py-8">
+    <header className="wrap flex items-center justify-between gap-4 py-6 sm:py-8">
       <Link href="/" className="font-serif text-lg font-medium tracking-tight">
         {profile.name}
       </Link>
@@ -20,7 +20,7 @@ export function SiteHeader() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="transition-colors hover:text-fg"
+                className="-my-3 inline-block py-3 transition-colors hover:text-fg"
               >
                 {item.label}
               </Link>

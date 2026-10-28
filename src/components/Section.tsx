@@ -2,32 +2,35 @@ type Props = {
   id: string;
   index: string;
   title: string;
-  // Stack the heading above the content and use the full width (for card grids).
-  wide?: boolean;
+  // Full-bleed inverted band (see `.band` in globals.css).
+  band?: boolean;
   children: React.ReactNode;
 };
 
-// Numbered section with a hairline rule; label column collapses above content on mobile.
-export function Section({ id, index, title, wide = false, children }: Props) {
+// Numbered section: mono counter + large serif title, content below.
+export function Section({ id, index, title, band = false, children }: Props) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className="wrap mt-24 scroll-mt-8 sm:mt-32"
+      className={`scroll-mt-8 ${band ? 'band py-24 sm:py-32' : 'mt-24 sm:mt-36'}`}
     >
-      <div
-        className={`grid gap-8 border-t border-rule pt-8 ${wide ? '' : 'md:grid-cols-[12rem_1fr] md:gap-10'}`}
-      >
-        <h2 id={`${id}-heading`} className="reveal">
+      <div className="wrap">
+        <h2
+          id={`${id}-heading`}
+          className="reveal flex flex-col gap-4 border-t border-rule pt-6 sm:flex-row sm:items-baseline sm:justify-between"
+        >
+          <span className="order-2 display text-[clamp(2.75rem,7vw,5rem)] leading-[0.95] sm:order-1">
+            {title}
+          </span>
           <span
-            className="block font-serif text-5xl leading-none text-accent tabular-nums sm:text-6xl"
             aria-hidden="true"
+            className="order-1 font-mono text-xs tracking-widest text-accent tabular-nums sm:order-2"
           >
             {index}
           </span>
-          <span className="mt-3 block label">{title}</span>
         </h2>
-        <div>{children}</div>
+        <div className="mt-12 sm:mt-16">{children}</div>
       </div>
     </section>
   );

@@ -37,13 +37,13 @@ const sections = [
 export default function OntaCaseStudy() {
   return (
     <article className="wrap pt-12 sm:pt-20">
-      <Link href="/#work" className="label link no-underline">
+      <Link href="/#work" className="label transition-colors hover:text-fg">
         ← Selected work
       </Link>
 
       <header className="mt-8">
         <p className="label">Case study</p>
-        <h1 className="mt-4 max-w-[20ch] font-serif text-4xl/[1.1] tracking-tight sm:text-6xl/[1.05]">
+        <h1 className="mt-5 max-w-[18ch] display text-[clamp(2.75rem,6.5vw,5.5rem)] leading-[0.98]">
           Onta Trips: one codebase for travellers and travel agencies
         </h1>
         <p className="mt-6 prose-body text-muted">
@@ -52,16 +52,21 @@ export default function OntaCaseStudy() {
           served by a single Next.js application.
         </p>
         <p className="mt-4 text-sm">
-          <a href="https://ontatrip.com" className="link">
+          <a
+            href="https://ontatrip.com"
+            className="link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Visit Onta Trips ↗
           </a>
         </p>
 
-        <dl className="mt-10 grid grid-cols-1 gap-6 border-y border-rule py-6 sm:grid-cols-2 lg:grid-cols-4">
+        <dl className="mt-12 grid grid-cols-1 gap-x-8 gap-y-6 border-y border-rule py-8 sm:grid-cols-2 lg:grid-cols-4">
           {facts.map((f) => (
             <div key={f.label}>
               <dt className="label">{f.label}</dt>
-              <dd className="mt-1 text-sm">{f.value}</dd>
+              <dd className="mt-2 font-serif text-xl/snug">{f.value}</dd>
             </div>
           ))}
         </dl>
@@ -72,7 +77,10 @@ export default function OntaCaseStudy() {
           <ol className="sticky top-8 space-y-2 text-sm text-muted">
             {sections.map((s) => (
               <li key={s.id}>
-                <a href={`#${s.id}`} className="hover:text-fg">
+                <a
+                  href={`#${s.id}`}
+                  className="transition-colors hover:text-fg"
+                >
                   {s.title}
                 </a>
               </li>
@@ -80,7 +88,7 @@ export default function OntaCaseStudy() {
           </ol>
         </nav>
 
-        <div className="prose-body min-w-0 space-y-16 [&_h2]:scroll-mt-8 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:tracking-tight sm:[&_h2]:text-3xl [&_h2+p]:mt-4 [&_p+p]:mt-4">
+        <div className="prose-body min-w-0 space-y-16 [&_h2]:scroll-mt-8 [&_h2]:display [&_h2]:text-3xl sm:[&_h2]:text-4xl [&_h2+p]:mt-4 [&_p+p]:mt-4">
           <section aria-labelledby="overview">
             <h2 id="overview">My part</h2>
             <p>

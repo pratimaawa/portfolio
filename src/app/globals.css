@@ -9,6 +9,18 @@
   --accent: #a63d17;
 }
 
+/* Inverted full-bleed band: swaps to the opposite palette, so every token-based utility works inside it. */
+.band {
+  --bg: #151412;
+  --fg: #f2efe8;
+  --muted: #a8a397;
+  --rule: #34312c;
+  --surface: #1f1d1a;
+  --accent: #f08a5d;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #121110;
@@ -17,6 +29,15 @@
     --rule: #2c2a26;
     --surface: #1a1917;
     --accent: #f08a5d;
+  }
+
+  .band {
+    --bg: #f2efe8;
+    --fg: #1c1b19;
+    --muted: #5f5b53;
+    --rule: #d6d1c5;
+    --surface: #e8e4da;
+    --accent: #a63d17;
   }
 }
 
@@ -75,7 +96,7 @@
 }
 
 @utility wrap {
-  @apply mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8;
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
 }
 
 @utility link {
@@ -103,13 +124,19 @@
   @apply btn border border-rule text-fg hover:border-fg;
 }
 
-@utility card {
-  @apply relative rounded-2xl border border-rule bg-surface p-6 transition-[transform,box-shadow,border-color] duration-300 sm:p-8;
+/* Large serif display type. */
+@utility display {
+  @apply font-serif font-normal tracking-[-0.035em];
 }
 
-/* Whole card is clickable via the primary link; secondary links sit above it. */
+/* Block made clickable by a stretched-link inside it; shows the focus ring on the whole block. */
+@utility hit {
+  @apply relative outline-accent has-[.stretched-link:focus-visible]:outline-2 has-[.stretched-link:focus-visible]:outline-offset-4;
+}
+
+/* Whole block is clickable via the primary link; secondary links sit above it (relative z-10). */
 @utility stretched-link {
-  @apply after:absolute after:inset-0 after:rounded-2xl after:content-[''];
+  @apply after:absolute after:inset-0 after:content-[''] focus-visible:outline-none;
 }
 
 @keyframes rise {
@@ -123,7 +150,31 @@
   }
 }
 
+@keyframes mask-up {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  /* Wrap in an overflow-hidden parent: text slides up from behind a mask. */
+  .mask-up {
+    animation: mask-up 1s cubic-bezier(0.2, 0.75, 0.15, 1) both;
+  }
+
+  .marquee {
+    animation: marquee 45s linear infinite;
+  }
+
   .enter {
     animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }

@@ -55,6 +55,7 @@ export const projects: Project[] = [
       'Zustand',
     ],
     href: '/work/onta-trips',
+    live: 'https://ontatrip.com',
     featured: true,
   },
   {
@@ -70,6 +71,7 @@ export const projects: Project[] = [
       'TanStack Query',
       'Zustand',
     ],
+    live: 'https://ourotrips.com',
   },
   {
     name: 'HamroTrips',

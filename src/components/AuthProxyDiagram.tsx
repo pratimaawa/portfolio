@@ -8,7 +8,7 @@ const boxes = [
 export function AuthProxyDiagram() {
   return (
     <figure className="my-10">
-      <div className="overflow-x-auto rounded-md border border-rule bg-surface p-4 sm:p-6">
+      <div className="overflow-x-auto rounded-xl border border-rule bg-surface p-4 sm:p-6">
         <svg
           viewBox="0 0 640 170"
           role="img"
