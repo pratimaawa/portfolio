@@ -3,7 +3,7 @@
 export const profile = {
   name: 'Pratima Awa',
   role: 'Senior Frontend Developer',
-  location: 'Kathmandu Valley, Nepal',
+  location: 'Kathmandu, Nepal',
   email: 'pratimaawal@gmail.com',
   url: 'https://pratimaawa.com.np',
   headline:
