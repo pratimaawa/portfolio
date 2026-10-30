@@ -20,6 +20,9 @@ const newsreader = Newsreader({
 
 const description = profile.headline;
 
+// Runs before paint so the saved/system theme applies without a flash.
+const themeScript = `document.documentElement.dataset.theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(profile.url),
   title: {
@@ -42,7 +45,11 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-dvh flex-col">
         <a
           href="#main"

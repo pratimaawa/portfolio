@@ -21,25 +21,27 @@
   color: var(--fg);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #121110;
-    --fg: #ecebe6;
-    --muted: #a19d93;
-    --rule: #2c2a26;
-    --surface: #1a1917;
-    --accent: #f08a5d;
-  }
-
-  .band {
-    --bg: #f2efe8;
-    --fg: #1c1b19;
-    --muted: #5f5b53;
-    --rule: #d6d1c5;
-    --surface: #e8e4da;
-    --accent: #a63d17;
-  }
+/* Theme is set on <html data-theme> by the inline script in layout.tsx (saved choice, else system). */
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #121110;
+  --fg: #ecebe6;
+  --muted: #a19d93;
+  --rule: #2c2a26;
+  --surface: #1a1917;
+  --accent: #f08a5d;
 }
+
+[data-theme='dark'] .band {
+  --bg: #f2efe8;
+  --fg: #1c1b19;
+  --muted: #5f5b53;
+  --rule: #d6d1c5;
+  --surface: #e8e4da;
+  --accent: #a63d17;
+}
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 @theme inline {
   --color-bg: var(--bg);
@@ -55,7 +57,7 @@
 
 @layer base {
   html {
-    color-scheme: light dark;
+    color-scheme: light;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
