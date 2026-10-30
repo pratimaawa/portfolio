@@ -5,7 +5,7 @@ export const profile = {
   role: 'Senior Frontend Developer',
   location: 'Kathmandu Valley, Nepal',
   email: 'pratimaawal@gmail.com',
-  url: 'https://pratima-awa.vercel.app',
+  url: 'https://pratimaawa.com.np',
   headline:
     'I build fast, reliable web applications with React, Next.js and TypeScript, and the frontend architecture that keeps them easy to change.',
   // Rendered in the accent colour inside the headline.
